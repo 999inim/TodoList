@@ -1,0 +1,15 @@
+
+.header{background-color:cornflowerblue;}
+.nav-top{background-color:blueviolet;}
+
+.content{}
+.menu{background-color:cyan;}
+.menu ul li{font-size:10px; padding:2px 5px 2px 5px;}
+
+.section{background-color:green;}
+.article{background-color:greenyellow;height:80%;}
+.article div{overflow:hidden;}
+
+.aside{background-color:mediumspringgreen;height:80%;display:none;}
+
+.footer{background-color:darkred}

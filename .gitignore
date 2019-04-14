@@ -1,0 +1,5 @@
+#intelliJ config file
+.idea/
+TodoList.iml
+node_modules/
+package-lock.json
