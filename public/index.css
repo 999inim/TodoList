@@ -1,15 +1,36 @@
 
+body{font-size:10px;}
+
 .header{background-color:cornflowerblue;}
-.nav-top{background-color:blueviolet;}
+.nav-top{height:40px; background-color:blueviolet;}
+.nav-input input{margin:5px 0 0 40px;}
+.nav-input input[type="text"] {font-size:10px;}
+#nav-add{margin:5px 0 0 5px;font-size:10px;}
 
 .content{}
 .menu{background-color:cyan;}
-.menu ul li{font-size:10px; padding:2px 5px 2px 5px;}
+.menu ul li{padding:2px 5px 2px 5px;}
 
 .section{background-color:green;}
-.article{background-color:greenyellow;height:80%;}
-.article div{overflow:hidden;}
+.article{background-color: ghostwhite; height:80%;}
+.article div{display:inline-flex;}
+.article-list{width:80%; margin-top:20px;}
+
+.article-record{margin: 5px 0 5px 0; padding:2px 2px 2px 2px; border-style:none;background-color:transparent;}
+.article-handle{cursor:grab; margin: 0px 10px 0px 10px;}
+.article-handle:active{cursor:grabbing;}
+.article-content{padding:5px 20px 5px 20px; }
+
+.article-checkbox-label{width:100%; padding-top:5px; word-wrap: break-word;}
+
+.article-toolbox{padding-top:7px;}
+.article-toolbox:hover{cursor:default;}
+.article-toolbox-edit{color:lightgrey}
+.article-toolbox-edit:hover{color:dodgerblue}
+.article-toolbox-del{color:lightgrey}
+.article-toolbox-del:hover{color:red}
+
 
 .aside{background-color:mediumspringgreen;height:80%;display:none;}
 
-.footer{background-color:darkred}
+.footer{background-color:darkred; padding:10px; text-align: center;}

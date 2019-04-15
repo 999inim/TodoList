@@ -3,8 +3,8 @@ var router = express.Router();
 
 router.get('/', function(req, res, next) {
     //res.send('respond with a resource');
-    var todoList=[{"title":"sample 1"},{"title":"sample 2"},{"title":"sample 3"}];
-    res.json(todoList);
+    var resList=table["default"]
+    res.json(resList);
 });
 
 router.post('/:type', function(req, res, next) {
@@ -18,22 +18,14 @@ module.exports = router;
 
 
 
-// ## Todo records.
+// ## Todo table.
+// table={"default":[{ }, { }, { } .. ], "xxx":[ ... ]};
+//var sampleRecord={"title":"sample record 1", "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]};
+
+var table={};
 var todoList=[];
-var TodoRecord=function(title, favorite, completed, date/*Object*/, indent, childRecords/*Array*/){
-  this.title=title;
-  this.favorite=favorite;
-  this.completed=completed;
-  this.date=date;
-  this.indent=indent;
-  this.childRecords=childRecords;
-};
-
-
-var todoRecord={"title":"sample record 1",
-  "favorite":false,
-  "completed":false,
-  "date":{},
-  "indent":0,
-  "childRecord":[]}
+for(var i=0; i<5; i++){
+  todoList.push({"id":i, "title":"sample record "+i, "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]});
+}
+table["default"]=todoList;
 

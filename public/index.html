@@ -5,6 +5,9 @@
   <script src="http://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
   <script src="/Init.js"></script>
 
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/index.css">
 </head>
 
 <body>
@@ -13,20 +16,22 @@
     header
   </div>
 
-  <div class="container nav-top">
-    nav
-    <div class="row ">
-      <div class="col text-center">aaa</div>
-      <div class="col text-center">bbb</div>
-      <div class="col text-center">bbb</div>
-
+  <div class="container nav-top ">
+    <!-- ## nav -->
+    <div class="nav-input row d-flex justify-content-center  ">
+      <div class="col-8">
+        <div  class="form-inline center-block " >
+          <input  name="title" class="header-input form-control" style="width: 400px;" type="text" placeholder="여기에 입력하시오." aria-label="Search" >
+          <button id="nav-add" class="btn btn-success" type="submit">Add Task</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="container content">
     <div class="row">
       <div class="col-2 menu">
-        menu
+        <!--## menu -->
 
         <hr>
 
@@ -52,13 +57,37 @@
       </div>
 
       <div class="col-10 section">
-          section
+          <!--## section -->
           <div class="row">
             <div class="col article">
-              <div>article content</div>
+              <!-- ### Todo List -->
+
+              <div class="article-list list-group center-block " id="sortable">
+                <!-- Todo Record -->
+                <div class="article-record ui-state-default">
+                    <!-- 1. Handle -->
+                    <div class="article-handle d-flex align-items-center"><i class="fas fa-grip-vertical"></i></div>
+                    <!-- 2. Content -->
+                    <div class="article-content list-group-item list-group-item-action justify-content-between">
+                        <!-- 2-1. CheckBox + Title -->
+                        <div class="article-checkbox custom-control custom-checkbox">
+                            <input type="checkbox" class="article-checkbox custom-control-input" id="1">
+                            <label class="article-checkbox-label custom-control-label" for="1">
+                              해야할일 입니다.해야할일 입니다.해야할일 입니다.해야할일 입니다.해야할일 입니다.해야할일 입니다. 입니다.</label>
+                        </div>
+                        <!-- 2-2. ToolBox -->
+                        <div class="article-toolbox"><i class="article-toolbox-edit fa fa-edit">edit</i>&nbsp;&nbsp;<i class="article-toolbox-del far fa-trash-alt">del</i></div>
+                    </div>
+                </div>
+              </div>
+
             </div>
+
+            <!-- ### Todo Record Detail-->
             <div class="col aside"></div>
+            </div>
           </div>
+
       </div>
     </div>
 
