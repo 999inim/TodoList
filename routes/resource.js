@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next) {
-  //res.send('respond with a resource');
-  var todoList=[{"title":"sample 1"},{"title":"sample 2"},{"title":"sample 3"}];
-  res.json(todoList);
+    //res.send('respond with a resource');
+    var todoList=[{"title":"sample 1"},{"title":"sample 2"},{"title":"sample 3"}];
+    res.json(todoList);
 });
 
 router.post('/:type', function(req, res, next) {
-
+  //타입별로 다른 처리후 객체 저장
 });
 
 module.exports = router;

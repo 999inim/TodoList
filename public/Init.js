@@ -1,3 +1,4 @@
+import {todoSubject} from "./js/Main";
 
 $(function(){
     // ## Load Library Dependencies
@@ -14,7 +15,10 @@ $(function(){
     //$("body").append("<p>Hello Jquery !</p>");
     //$("body").append('<p class="text-primary">Hello Bootstrap !</p>');
 
-    // ## Load Dependency Module
-    var eventHandler='<script src="/js/eventHandler.js"></script >';
-    $("head").append(eventHandler);
+
+    // ## Load Dependency Module Func
+    var subject=todoSubject;
+    subject.reg
+
+
 });
