@@ -1,12 +1,18 @@
-import {drawTodoList} from 'DrawingView';
-import {} from 'EventHandler';
+//import {drawTodoList} from 'DrawingView';
+//import {} from 'EventHandler';
 
 console.log("core.js");
 
+//Init.js
+getInitTodoList();
+
 function getInitTodoList(){
     $.get("/resources", function (res) {
-        drawTodoList();
+        drawTodoList(res);
         //동적으로 생성된 객체들에게 EventHandler 적용
+        //export from EventHandler.js
+        refreshHandlers();
+
     });
 }
 
@@ -21,4 +27,10 @@ function postTodo(Action){ // Action : add, del, edit, sort, favorite, completed
 
 
 
-export{getInitTodoList, postTodo};
+function TodoListManage(todoList){
+    this.todoList=todoList;
+}
+
+
+
+//export{getInitTodoList, postTodo};

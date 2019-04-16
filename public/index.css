@@ -16,12 +16,14 @@ body{font-size:10px;}
 .article div{display:inline-flex;}
 .article-list{width:80%; margin-top:20px;}
 
-.article-record{margin: 5px 0 5px 0; padding:2px 2px 2px 2px; border-style:none;background-color:transparent;}
+.article-record{margin-bottom: 0.5px; padding:2px 2px 2px 2px; border-style:none;background-color:transparent;}
 .article-handle{cursor:grab; margin: 0px 10px 0px 10px;}
 .article-handle:active{cursor:grabbing;}
 .article-content{padding:5px 20px 5px 20px; }
 
 .article-checkbox-label{width:100%; padding-top:5px; word-wrap: break-word;}
+.article-checkbox-edit{width:auto; background-color:white; border-style:none;}
+.article-checkbox-edit:hover{background-color:whitesmoke}
 
 .article-toolbox{padding-top:7px;}
 .article-toolbox:hover{cursor:default;}
@@ -34,3 +36,5 @@ body{font-size:10px;}
 .aside{background-color:mediumspringgreen;height:80%;display:none;}
 
 .footer{background-color:darkred; padding:10px; text-align: center;}
+
+.ui-state-highlight {width:90%;margin-left:50px; height:50px; border-width:0px; border-style:none; background-color:transparent; }
