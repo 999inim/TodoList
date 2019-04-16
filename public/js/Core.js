@@ -1,18 +1,11 @@
-//import {drawTodoList} from 'DrawingView';
-//import {} from 'EventHandler';
-
 console.log("core.js");
-
-//Init.js
-getInitTodoList();
+var drawingView=require('./DrawingView');
+var eventHandler=require('./EventHandler');
 
 function getInitTodoList(){
     $.get("/resources", function (res) {
-        drawTodoList(res);
-        //동적으로 생성된 객체들에게 EventHandler 적용
-        //export from EventHandler.js
-        refreshHandlers();
-
+        drawingView.drawTodoList(res);
+        eventHandler.refreshHandlers();
     });
 }
 
@@ -25,12 +18,18 @@ function postTodo(Action){ // Action : add, del, edit, sort, favorite, completed
     });
 }
 
-
-
-function TodoListManage(todoList){
-    this.todoList=todoList;
+//Action Class 정의 후 Init모듈에 export
+var Test=function(x,y){
+    this.x=x;
+    this.y=y;
 }
 
+Test.prototype.add=function(){
+    return this.x+this.y;
+}
+
+var test=new Test(2,3);
 
 
-//export{getInitTodoList, postTodo};
+
+module.exports={getInitTodoList, test};
