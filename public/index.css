@@ -12,7 +12,7 @@ body{font-size:10px;}
 .menu ul li{padding:2px 5px 2px 5px;}
 
 .section{background-color:green;}
-.article{background-color: ghostwhite; height:80%;}
+.article{background-color: ghostwhite; height:80%; overflow:scroll;}
 .article div{display:inline-flex;}
 .article-list{width:80%; margin-top:20px;}
 

@@ -1,8 +1,7 @@
-var core = require('./Core');
+var core=require('./Core');
+var drawingView=require('./DrawingView');
 
-//Init.js
 $( function() {
-console.log(core.test.add());
     $( "#sortable" ).sortable({
         placeholder: "ui-state-highlight",
         update:function(){/*server에 반영*/console.log("sort");},
@@ -12,9 +11,6 @@ console.log(core.test.add());
     });
     $( "#sortable" ).disableSelection();
 } );
-
-refreshHandlers();
-
 
 // Bind Event with EventHandler
 
@@ -28,10 +24,12 @@ function refreshHandlers(){
 }
 
 function addTodoHandler(){
+    console.log(1);
     $("#nav-add").on("click", function () {
-        var todoTitle=$(".nav-input").val();
-        //export from Core
-        //addTodo(todoTitle) > Core에서 callback success > Draw;
+        var todoTitle=$("#nav-input").val();
+        //Action 타입과 인자 전달
+        console.log("2 : "+todoTitle);
+        core.postTodo({"type":"add","param":{"title":todoTitle}});
     });
 }
 
@@ -44,16 +42,17 @@ function delTodoHandler(){
         $(targetTodo).hide("drop", { direction: "right" }, 1200, function(){
             $(targetTodo).remove();
         });
-        //Action :  delTodo();
+        //삭제하는 애의 num
+        core.postTodo("del",number);
     });
 }
 
 // 수정 버튼 누를 때 이벤트 처리
 function editTodoHandler(){
     $(".article-toolbox-edit").on("click", function () {
-        console.log(core.test.add());
         //edit 필드 활성화
-        console.log("edit");
+        console.log(todo.test.add());
+        console.log("core");
         var todoLabel=$(this).parent('div').siblings('div');
         $(todoLabel).children('label').hide();
         console.log($(todoLabel).text());

@@ -1,6 +1,9 @@
-//import {} from "EventHandler";
-
-function drawTodo(todo /*처음 디비에서 가져온 리스트들*/){
+function drawTodo(todo){
+    console.log("5"+todo)
+    var articleRecord=makeTodo(todo);
+    $('.article-list').append(articleRecord);
+}
+function makeTodo(todo/*todoRecord 한 개*/){
     var articleRecord=$('<div class="article-record ui-state-default"></div>');
         var articleHandle=$('<div class="article-handle d-flex align-items-center"><i class="fas fa-grip-vertical"></i></div>');
         var articleContent=$('<div class="article-content list-group-item list-group-item-action justify-content-between"></div>');
@@ -28,12 +31,11 @@ function drawTodo(todo /*처음 디비에서 가져온 리스트들*/){
     return articleRecord;
 }
 
-function drawTodoList(todoList){
+function drawTodoList(todoList/*처음 디비에서 가져온 리스트들*/){
     $.each(todoList, function(index){
-        var articleRecord= drawTodo(todoList[index]);
+        var articleRecord= makeTodo(todoList[index]);
         $(".article-list").append(articleRecord);
     });
 }
 
-module.exports={drawTodoList};
-//export{drawTodoList};
+module.exports={makeTodo, drawTodoList, drawTodo};

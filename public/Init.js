@@ -12,9 +12,7 @@ $(function(){
     //$("body").append("<p>Hello Jquery !</p>");
     //$("body").append('<p class="text-primary">Hello Bootstrap !</p>');
 
-    eventHandler.refreshHandlers();
     core.getInitTodoList();
-    core.test.x=4;
-
+    eventHandler.refreshHandlers();
 });
 

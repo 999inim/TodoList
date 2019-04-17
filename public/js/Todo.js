@@ -1,32 +1,12 @@
-var express = require('express');
-var router = express.Router();
-
-router.get('/', function(req, res, next) {
-    //res.send('respond with a resource');
-    var resList=storage.todoList;
-    res.json(resList);
-});
-
-router.post('/:type', function(req, res, next) {
-    //타입별로 다른 처리후 객체 저장
-    console.log("resoure.js");
-    var Action={};
-    Action.type=req.params.type;
-    Action.params=req.body;
-    try {
-        var todoDAO = new RecordAction(Action.type, Action.params);
-        res.send("success");
-    }catch{
-        res.send("fail");
-    }
-});
-
-
-// 저장 객체 및 메서드
-
 var storage={
+    "lastId":0,
     "todoList":[],
+    "setProperty":function(todoList){
+        this.todoList=todoList;
+        this.lastId=this.todoList[this.todoList.length-1].id;
+    }
 }
+
 
 //Action about record
 var RecordAction =function(type, param/*타입에 해당하는 전달 객체*/){
@@ -59,15 +39,19 @@ RecordAction.prototype.setTodo=function() {
     }
 }
 
-module.exports = router;
 
-// ## Todo table.
-// table={"default":[{ }, { }, { } .. ], "xxx":[ ... ]};
-//var sampleRecord={"title":"sample record 1", "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]};
 
-for(var i=0; i<5; i++){
-  storage.todoList.push({"id":i, "title":"sample record "+i, "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]});
+
+//Test class
+var Test=function(x,y){
+    this.x=x;
+    this.y=y;
 }
 
-//table["default"]=storage.todoList;
+Test.prototype.add=function(){
+    return this.x+this.y;
+}
 
+var test=new Test(2,3);
+
+module.exports={storage, RecordAction, Test}
