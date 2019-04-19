@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "express": "~4.16.0",
+    "body-parser": "^1.18.3",
     "jquery": "^3.4.0",
     "jquery-ui": "^1.12.1",
     "minifyify": "^7.3.5"

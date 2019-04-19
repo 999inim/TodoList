@@ -1,6 +1,6 @@
 // ## Load Dependency Module Func
 var core=require('./js/Core.js');
-var eventHandler=require('./js/EventHandler');
+
 
 $(function(){
     // ## Load Library Dependencies
@@ -8,13 +8,7 @@ $(function(){
     var bootstrap='<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>';
     $(".footer").append(popper).append(bootstrap);
 
-    // ## Test
-    //$("body").append("<p>Hello Jquery !</p>");
-    //$("body").append('<p class="text-primary">Hello Bootstrap !</p>');
-
-    core.getInitTodoList();
-    eventHandler.refreshHandlers();
-    core.eventListener(eventHandler)
+    new core.CoreRouter();
 
 });
 

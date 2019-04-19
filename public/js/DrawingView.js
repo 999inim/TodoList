@@ -4,6 +4,7 @@ function drawTodo(todo){
 }
 
 function delTodo(todo/*html target*/){
+    console.log(todo);
     $(todo).hide("drop", { direction: "right" }, 1200, function(){
         $(todo).remove();
     });

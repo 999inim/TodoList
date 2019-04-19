@@ -11,49 +11,39 @@ $( function() {
     $( "#sortable" ).disableSelection();
 } );
 
-// Bind Event with EventHandler
 
-function refreshHandlers(){
-    console.log("refreshHandler");
-    addTodoHandler();
-    delTodoHandler();
-    editTodoHandler();
-    completeTodoHandler();
-    addShortcutkeyHandler();
-}
+var Action={"type":"","param":{}};
 
-var Action={"type":"", "param":{}};
-
-function addTodoHandler(){
+function addTodoHandler(coreContext){
     $("#nav-add").on("click", function () {
-        console.log("add");
         var todoTitle=$("#nav-input").val();
-        console.log(todoTitle);
+
         //Action 타입과 인자 전달
         Action.type="add";
         Action.param={"title":todoTitle};
-
-        return Action;
-        //core.postTodo({"type":"add","param":{"title":todoTitle}});
+        coreContext.postTodo(Action);
     });
 }
 
-function delTodoHandler(){
+function delTodoHandler(coreContext){
     $(".article-toolbox-del").on("click", function () {
-        console.log("del");
-
         //article record
         var targetTodo=$(this).parent('div').parent('div').parent('div');
         //article-checkbox의 id attr
         var targetID=$(this).parent('div').prev().children().first().attr('id');
 
         //서버에서 지울 수 있도록 id값, DrawingView 모듈에서 지울 수 있도록 target
-        core.postTodo({"type":"del","param":{"id":targetID,"target":targetTodo}});
+        Action.type="del";
+        Action.param={"id":targetID,"target":targetTodo};
+
+        console.log(Action.type);
+        console.log(Action.param);
+        coreContext.postTodo(Action);
     });
 }
 
 // 수정 버튼 누를 때 이벤트 처리
-function editTodoHandler(){
+function editTodoHandler(coreContext){
     $(".article-toolbox-edit").on("click", function () {
         //edit 필드 활성화
         console.log(todo.test.add());
@@ -67,7 +57,7 @@ function editTodoHandler(){
 }
 
 
-function completeTodoHandler(){
+function completeTodoHandler(coreContext){
     $(".article-checkbox").on("change",function(){
         console.log("change");
         var todoDataTarget=$(this).parent('div').parent('div').parent('div'); //target : article-task element
@@ -86,7 +76,7 @@ function completeTodoHandler(){
     });
 }
 
-function addShortcutkeyHandler(){
+function addShortcutkeyHandler(coreContext){
     $(".article-checkbox-edit").keypress(function(e) {
         if (e.keyCode == 13){
             var articleCheckbox=$(this).parent('div');
@@ -102,4 +92,4 @@ function addShortcutkeyHandler(){
 
 
 
-module.exports={refreshHandlers};
+module.exports={addTodoHandler, delTodoHandler};

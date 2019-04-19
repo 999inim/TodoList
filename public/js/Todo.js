@@ -21,7 +21,7 @@ var RecordAction =function(type, param/*타입에 해당하는 전달 객체*/){
 RecordAction.prototype.todoModel={"id":-1, "title":"", "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]};
 RecordAction.prototype.findTodo=function(id){
     storage.todoList.forEach(function(index){
-        if(stoarage.todoList[index].id=id){
+        if(storage.todoList[index].id==id){
             return index;
         }
     });
@@ -33,12 +33,12 @@ RecordAction.prototype.setTodo=function() {
     switch (this.type) {
         case 'add':
             this.todoModel.title = this.param["title"];
-            storage.push(this.todoModel);
+            storage.todoList.push(this.todoModel);
             storage.setProperty();
             break;
-        case 'delete':
+        case 'del':
             //param(id,targetDOM)
-            var idx=this.findTodo(this.param.id);
+            var idx=this.findTodo(this.param["id"]);
             storage.todoList.slice(idx,1);
             break;
         case 'edit':

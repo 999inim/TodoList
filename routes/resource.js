@@ -1,26 +1,28 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
     //res.send('respond with a resource');
     var resList=storage.todoList;
     res.json(resList);
 });
 
-router.post('/:type', function(req, res, next) {
+router.post('/:type', function(req, res) {
     //타입별로 다른 처리후 객체 저장
     var Action={};
     Action.type=req.params.type;
-    Action.params=req.body;
-    var todoDAO = new RecordAction(Action.type, Action.params);
+    Action.param=req.body;
+
+    //데이터 분류 및 저장
+    var todoDAO = new RecordAction(Action.type, Action.param);
     todoDAO.setTodo();
-    //문제가 있으면 fail하는 케이스 이후에 추가
-    
+
     res.send("success");
+    //문제가 있으면 fail하는 케이스 이후에 추가
 });
 
 
-// 저장 객체 및 메서드
+// ## 저장 객체 및 메서드
 
 var storage={
     "lastId":0,
@@ -35,22 +37,35 @@ var storage={
     "findLastId":function(){/*sort하면 id위치가 바뀌게된다*/}
 }
 
-//Action about record
+
+
+// ## Action about record
 var RecordAction =function(type, param/*타입에 해당하는 전달 객체*/){
     this.type=type;
     this.param=param;
 }
 
 RecordAction.prototype.todoModel={"id":-1, "title":"", "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]};
+RecordAction.prototype.findTodo=function(id){
+    storage.todoList.forEach(function(index){
+        console.log(index);
+        if(storage.todoList[index]["id"]==id){
+            return index;
+        }
+    });
+}
 RecordAction.prototype.setTodo=function() {
     switch (this.type) {
         case 'add':
             //이 부분 나중에 제일 큰 id를 찾는 방식(메서드)로 변경
+            console.log(this.param);
             this.todoModel.title = this.param["title"];
-            storage.push(this.todoModel);
+            this.todoModel.id=storage.lastId+1;
+            storage.todoList.push(this.todoModel);
             storage.setProperty();
             break;
-        case 'delete':
+        case 'del':
+            console.log("del in server")
             var idx=this.findTodo(this.param["id"]);
             storage.todoList.slice(idx,1);
             storage.setProperty();
