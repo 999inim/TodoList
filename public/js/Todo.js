@@ -1,10 +1,14 @@
 var storage={
     "lastId":0,
     "todoList":[],
-    "setProperty":function(todoList){
+    "setTodoList":function(todoList){
         this.todoList=todoList;
+        this.setProperty();
+    },
+    "setProperty":function(){
         this.lastId=this.todoList[this.todoList.length-1].id;
-    }
+    },
+    "findLastId":function(){/*sort하면 id위치가 바뀌게된다*/}
 }
 
 
@@ -15,26 +19,35 @@ var RecordAction =function(type, param/*타입에 해당하는 전달 객체*/){
 }
 
 RecordAction.prototype.todoModel={"id":-1, "title":"", "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]};
+RecordAction.prototype.findTodo=function(id){
+    storage.todoList.forEach(function(index){
+        if(stoarage.todoList[index].id=id){
+            return index;
+        }
+    });
+}
+
+//
 RecordAction.prototype.setTodo=function() {
+    //저장(반영) 및 타입별 전처리(그리기)
     switch (this.type) {
         case 'add':
-            this.todoModel.id = storage.lastId + 1;
-            storage.lastId += 1;
             this.todoModel.title = this.param["title"];
+            storage.push(this.todoModel);
+            storage.setProperty();
+            break;
+        case 'delete':
+            //param(id,targetDOM)
+            var idx=this.findTodo(this.param.id);
+            storage.todoList.slice(idx,1);
             break;
         case 'edit':
             //바꾸려고 하는 record(id)를 가져오고 해당 record에 title값만 바꾼다.
-            var editRecord=storage.todoList.forEach(function(index){
-                if(stoarage.todoList[index].id=this.param.id){
-                    return storage.todoList[index];
-                }
-            });
+            var editRecord=this.findTodo(this.param.id);
             editRecord["title"]=this.param["title"];
             this.todoModel =editRecord;
             break;
-        case 'delete':
-            //Model에 id값만 받아서 전달
-            this.todoModel["id"]=this.param["id"];
+        case 'sort':
             break;
     }
 }
@@ -42,16 +55,4 @@ RecordAction.prototype.setTodo=function() {
 
 
 
-//Test class
-var Test=function(x,y){
-    this.x=x;
-    this.y=y;
-}
-
-Test.prototype.add=function(){
-    return this.x+this.y;
-}
-
-var test=new Test(2,3);
-
-module.exports={storage, RecordAction, Test}
+module.exports={storage, RecordAction}

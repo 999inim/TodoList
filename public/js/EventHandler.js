@@ -1,4 +1,3 @@
-var core=require('./Core');
 var drawingView=require('./DrawingView');
 
 $( function() {
@@ -15,35 +14,41 @@ $( function() {
 // Bind Event with EventHandler
 
 function refreshHandlers(){
+    console.log("refreshHandler");
     addTodoHandler();
     delTodoHandler();
     editTodoHandler();
-
     completeTodoHandler();
     addShortcutkeyHandler();
 }
 
+var Action={"type":"", "param":{}};
+
 function addTodoHandler(){
-    console.log(1);
     $("#nav-add").on("click", function () {
+        console.log("add");
         var todoTitle=$("#nav-input").val();
+        console.log(todoTitle);
         //Action 타입과 인자 전달
-        console.log("2 : "+todoTitle);
-        core.postTodo({"type":"add","param":{"title":todoTitle}});
+        Action.type="add";
+        Action.param={"title":todoTitle};
+
+        return Action;
+        //core.postTodo({"type":"add","param":{"title":todoTitle}});
     });
 }
 
 function delTodoHandler(){
     $(".article-toolbox-del").on("click", function () {
         console.log("del");
-        //Drawing
+
+        //article record
         var targetTodo=$(this).parent('div').parent('div').parent('div');
-        //export from DrawingView
-        $(targetTodo).hide("drop", { direction: "right" }, 1200, function(){
-            $(targetTodo).remove();
-        });
-        //삭제하는 애의 num
-        core.postTodo("del",number);
+        //article-checkbox의 id attr
+        var targetID=$(this).parent('div').prev().children().first().attr('id');
+
+        //서버에서 지울 수 있도록 id값, DrawingView 모듈에서 지울 수 있도록 target
+        core.postTodo({"type":"del","param":{"id":targetID,"target":targetTodo}});
     });
 }
 

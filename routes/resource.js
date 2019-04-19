@@ -9,23 +9,30 @@ router.get('/', function(req, res, next) {
 
 router.post('/:type', function(req, res, next) {
     //타입별로 다른 처리후 객체 저장
-    console.log("resoure.js");
     var Action={};
     Action.type=req.params.type;
     Action.params=req.body;
-    try {
-        var todoDAO = new RecordAction(Action.type, Action.params);
-        res.send("success");
-    }catch{
-        res.send("fail");
-    }
+    var todoDAO = new RecordAction(Action.type, Action.params);
+    todoDAO.setTodo();
+    //문제가 있으면 fail하는 케이스 이후에 추가
+    
+    res.send("success");
 });
 
 
 // 저장 객체 및 메서드
 
 var storage={
+    "lastId":0,
     "todoList":[],
+    "setTodoList":function(todoList){
+        this.todoList=todoList;
+        this.setProperty();
+    },
+    "setProperty":function(){
+        this.lastId=this.todoList[this.todoList.length-1].id;
+    },
+    "findLastId":function(){/*sort하면 id위치가 바뀌게된다*/}
 }
 
 //Action about record
@@ -38,9 +45,15 @@ RecordAction.prototype.todoModel={"id":-1, "title":"", "favorite":false, "comple
 RecordAction.prototype.setTodo=function() {
     switch (this.type) {
         case 'add':
-            this.todoModel.id = storage.lastId + 1;
-            storage.lastId += 1;
+            //이 부분 나중에 제일 큰 id를 찾는 방식(메서드)로 변경
             this.todoModel.title = this.param["title"];
+            storage.push(this.todoModel);
+            storage.setProperty();
+            break;
+        case 'delete':
+            var idx=this.findTodo(this.param["id"]);
+            storage.todoList.slice(idx,1);
+            storage.setProperty();
             break;
         case 'edit':
             //바꾸려고 하는 record(id)를 가져오고 해당 record에 title값만 바꾼다.
@@ -51,10 +64,6 @@ RecordAction.prototype.setTodo=function() {
             });
             editRecord["title"]=this.param["title"];
             this.todoModel =editRecord;
-            break;
-        case 'delete':
-            //Model에 id값만 받아서 전달
-            this.todoModel["id"]=this.param["id"];
             break;
     }
 }

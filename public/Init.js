@@ -14,5 +14,7 @@ $(function(){
 
     core.getInitTodoList();
     eventHandler.refreshHandlers();
+    core.eventListener(eventHandler)
+
 });
 

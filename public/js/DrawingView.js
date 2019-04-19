@@ -1,8 +1,14 @@
 function drawTodo(todo){
-    console.log("5"+todo)
     var articleRecord=makeTodo(todo);
     $('.article-list').append(articleRecord);
 }
+
+function delTodo(todo/*html target*/){
+    $(todo).hide("drop", { direction: "right" }, 1200, function(){
+        $(todo).remove();
+    });
+}
+
 function makeTodo(todo/*todoRecord 한 개*/){
     var articleRecord=$('<div class="article-record ui-state-default"></div>');
         var articleHandle=$('<div class="article-handle d-flex align-items-center"><i class="fas fa-grip-vertical"></i></div>');
@@ -38,4 +44,4 @@ function drawTodoList(todoList/*처음 디비에서 가져온 리스트들*/){
     });
 }
 
-module.exports={makeTodo, drawTodoList, drawTodo};
+module.exports={makeTodo, drawTodoList, drawTodo, delTodo};
