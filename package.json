@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./app.js",
-    "serve": "beefy ./public/Init.js --live",
-    "build": "browserify ./public/Init.js -o ./public/bundle.js"
+    "auto-restart" : "nodemon ./app.js",
+    "build": "browserify ./public/Init.js -o ./public/bundle.js",
+    "auto-build":"watchify ./public/Init.js -o ./public/bundle.js -v"
   },
   "dependencies": {
     "express": "~4.16.0",

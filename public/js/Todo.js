@@ -19,12 +19,14 @@ var RecordAction =function(type, param/*타입에 해당하는 전달 객체*/){
 }
 
 RecordAction.prototype.todoModel={"id":-1, "title":"", "favorite":false, "completed":false, "date":{}, "indent":0, "childRecord":[]};
-RecordAction.prototype.findTodo=function(id){
-    storage.todoList.forEach(function(index){
-        if(storage.todoList[index].id==id){
-            return index;
+RecordAction.prototype.findTodo=function(id) {
+    var idx;
+    for (var i = 0; i < storage.todoList.length; i++)
+        if (storage.todoList[i].id == id) {
+            idx=id;
+            break;
         }
-    });
+    return idx;
 }
 
 //

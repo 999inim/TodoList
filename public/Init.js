@@ -9,6 +9,5 @@ $(function(){
     $(".footer").append(popper).append(bootstrap);
 
     new core.CoreRouter();
-
 });
 

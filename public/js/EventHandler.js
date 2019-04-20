@@ -17,8 +17,8 @@ var Action={"type":"","param":{}};
 function addTodoHandler(coreContext){
     $("#nav-add").on("click", function () {
         var todoTitle=$("#nav-input").val();
-
         //Action 타입과 인자 전달
+
         Action.type="add";
         Action.param={"title":todoTitle};
         coreContext.postTodo(Action);
@@ -36,23 +36,31 @@ function delTodoHandler(coreContext){
         Action.type="del";
         Action.param={"id":targetID,"target":targetTodo};
 
-        console.log(Action.type);
-        console.log(Action.param);
         coreContext.postTodo(Action);
     });
 }
 
 // 수정 버튼 누를 때 이벤트 처리
 function editTodoHandler(coreContext){
+
     $(".article-toolbox-edit").on("click", function () {
         //edit 필드 활성화
-        console.log(todo.test.add());
-        console.log("core");
-        var todoLabel=$(this).parent('div').siblings('div');
-        $(todoLabel).children('label').hide();
-        console.log($(todoLabel).text());
-        $(todoLabel).children('.article-checkbox-edit').show();
-        $(todoLabel).children('.article-checkbox-edit').val($(todoLabel).text());
+        console.log("edit");
+        var targetLabel=$(this).parent('div').siblings('div').children('label');
+        var targetID=$(this).parent('div').prev().children().first().attr('id');
+        var targetText=$(targetLabel).text();
+        $(targetLabel).text('');
+
+        //text필드 크기 조정
+        var parentSize=$(this).parent('div').parent('div').width();
+        $(this).parent('div').siblings('div').children('.article-checkbox-edit').attr('size', parentSize*0.13);
+        //$(targetLabel).children('label').hide();
+        $(targetLabel).siblings('.article-checkbox-edit').val(targetText);
+        $(targetLabel).siblings('.article-checkbox-edit').show();
+
+        Action.type="edit";
+        Action.param={"id":targetID};
+        //coreContext.postTodo(Action);
     });
 }
 
@@ -92,4 +100,4 @@ function addShortcutkeyHandler(coreContext){
 
 
 
-module.exports={addTodoHandler, delTodoHandler};
+module.exports={addTodoHandler, delTodoHandler, editTodoHandler};
