@@ -48,6 +48,8 @@ RecordAction.prototype.setTodo=function() {
             storage.todoList[idx].title=this.param["title"];
             break;
         case 'sort':
+            var idx=this.findTodo(this.param["id"]);
+
             break;
     }
 }

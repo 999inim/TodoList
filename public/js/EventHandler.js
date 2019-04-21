@@ -1,8 +1,5 @@
 var drawingView=require('./DrawingView');
 
-
-
-
 var Action={"type":"","param":{}};
 
 function addTodoHandler(coreContext){
@@ -64,24 +61,30 @@ function editTodoHandler(coreContext){
 
     };
 }
-
+var sortIdx;
+function getSortIdx(){
+    return sortIdx;
+}
 function sortTodoHandler(coreContext){
-
+    var oldIdx;
     $( "#sortable" ).sortable({
         placeholder: "ui-state-highlight",
-        update:function(){
-            console.log("sort");
-            console.dir(this);
-
-           /* Action.type="sort";
-            Action.param={"id":targetID,"title":newText};
-            coreContext.postTodo(Action);
-            */
+        start: function( ui, event ) {
+            var targetRecord = event.item;
+            sortIdx=$(targetRecord).index();
         },
-    });
-    $( "#sortable" ).draggable({
-        connectToSortable: "#sortable",
-        cursor:"grabbing"
+        update:function(ui, event){
+            console.log("sort");
+            var targetRecord = event.item;
+            var targetID=targetRecord.children().children().children('.article-checkbox').attr('id');
+            console.log("get "+ getSortIdx());
+            var newIdx=$(targetRecord).index();
+            console.log(newIdx);
+
+            Action.type="sort";
+            Action.param={"id":targetID, "oldIdx":getSortIdx(), "newIdx":newIdx};
+            coreContext.postTodo(Action);
+        }
     });
     $( "#sortable" ).disableSelection();
 
