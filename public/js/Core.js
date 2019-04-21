@@ -7,6 +7,7 @@ var CoreRouter=function(){
 }
 
 CoreRouter.prototype.registerEventHandler=function(){
+    eventHandler.sortTodoHandler(this);
     eventHandler.addTodoHandler(this);
     eventHandler.delTodoHandler(this);
     eventHandler.editTodoHandler(this);

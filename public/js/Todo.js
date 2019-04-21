@@ -44,10 +44,8 @@ RecordAction.prototype.setTodo=function() {
             storage.todoList.slice(idx,1);
             break;
         case 'edit':
-            //바꾸려고 하는 record(id)를 가져오고 해당 record에 title값만 바꾼다.
-            var editRecord=this.findTodo(this.param.id);
-            editRecord["title"]=this.param["title"];
-            this.todoModel =editRecord;
+            var idx=this.findTodo(this.param["id"]);
+            storage.todoList[idx].title=this.param["title"];
             break;
         case 'sort':
             break;

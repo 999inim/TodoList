@@ -18,7 +18,6 @@ body{font-size:10px;}
 
 .article-record{margin-bottom: 0.5px; padding:2px 2px 2px 2px; border-style:none;background-color:transparent;}
 .article-handle{cursor:grab; margin: 0px 10px 0px 10px;}
-.article-handle:active{cursor:grabbing;}
 .article-content{padding:5px 20px 5px 20px; }
 
 .article-checkbox-label{width:100%; padding-top:5px; word-wrap: break-word;}

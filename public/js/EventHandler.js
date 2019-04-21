@@ -1,15 +1,6 @@
 var drawingView=require('./DrawingView');
 
-$( function() {
-    $( "#sortable" ).sortable({
-        placeholder: "ui-state-highlight",
-        update:function(){/*server에 반영*/console.log("sort");},
-    });
-    $( "#sortable" ).draggable({
-        cursor: "grabbing",
-    });
-    $( "#sortable" ).disableSelection();
-} );
+
 
 
 var Action={"type":"","param":{}};
@@ -42,26 +33,59 @@ function delTodoHandler(coreContext){
 
 // 수정 버튼 누를 때 이벤트 처리
 function editTodoHandler(coreContext){
+     $('.article-toolbox-edit').one("click",handler1);
 
-    $(".article-toolbox-edit").on("click", function () {
-        //edit 필드 활성화
-        console.log("edit");
-        var targetLabel=$(this).parent('div').siblings('div').children('label');
-        var targetID=$(this).parent('div').prev().children().first().attr('id');
-        var targetText=$(targetLabel).text();
-        $(targetLabel).text('');
+        function handler1() {
+            $(this).one("click", handler2);
+            var targetLabel = $(this).parent('div').siblings('div').children('label');
+            var targetText = $(targetLabel).text();
+            $(targetLabel).text('');
 
-        //text필드 크기 조정
-        var parentSize=$(this).parent('div').parent('div').width();
-        $(this).parent('div').siblings('div').children('.article-checkbox-edit').attr('size', parentSize*0.13);
-        //$(targetLabel).children('label').hide();
-        $(targetLabel).siblings('.article-checkbox-edit').val(targetText);
-        $(targetLabel).siblings('.article-checkbox-edit').show();
+            //text필드 크기 조정
+            var parentSize = $(this).parent('div').parent('div').width();
+            $(this).parent('div').siblings('div').children('.article-checkbox-edit').attr('size', parentSize * 0.13);
+            //$(targetLabel).children('label').hide();
+            $(targetLabel).siblings('.article-checkbox-edit').val(targetText);
+            $(targetLabel).siblings('.article-checkbox-edit').show();
+        }
+        function handler2() {
+            $(this).one("click", handler1);
+            var targetLabel = $(this).parent('div').siblings('div').children('label');
+            console.log("edit");
+            var targetID = $(this).parent('div').prev().children().first().attr('id');
+            var newText = $(targetLabel).siblings('.article-checkbox-edit').val();
+            $(targetLabel).siblings('.article-checkbox-edit').hide();
+            $(targetLabel).text(newText);
+            console.log(newText);
 
-        Action.type="edit";
-        Action.param={"id":targetID};
-        //coreContext.postTodo(Action);
+            Action.type="edit";
+            Action.param={"id":targetID,"title":newText};
+            coreContext.postTodo(Action);
+
+    };
+}
+
+function sortTodoHandler(coreContext){
+
+    $( "#sortable" ).sortable({
+        placeholder: "ui-state-highlight",
+        update:function(){
+            console.log("sort");
+            console.dir(this);
+
+           /* Action.type="sort";
+            Action.param={"id":targetID,"title":newText};
+            coreContext.postTodo(Action);
+            */
+        },
     });
+    $( "#sortable" ).draggable({
+        connectToSortable: "#sortable",
+        cursor:"grabbing"
+    });
+    $( "#sortable" ).disableSelection();
+
+
 }
 
 
@@ -100,4 +124,4 @@ function addShortcutkeyHandler(coreContext){
 
 
 
-module.exports={addTodoHandler, delTodoHandler, editTodoHandler};
+module.exports={addTodoHandler, delTodoHandler, editTodoHandler, sortTodoHandler};
