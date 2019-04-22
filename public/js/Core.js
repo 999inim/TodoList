@@ -44,8 +44,10 @@ CoreRouter.prototype.postTodo=function (Action){
                     drawingView.delTodo(temp.target);
                     break;
                 case 'edit':
+                    //할거없음.
                     break;
                 case 'sort':
+                    //할거없음
                     break;
             }
         }else{

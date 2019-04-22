@@ -38,8 +38,7 @@ var storage={
 }
 
 
-
-// ## Action about record
+//Action about record
 var RecordAction =function(type, param/*타입에 해당하는 전달 객체*/){
     this.type=type;
     this.param=param;
@@ -56,26 +55,46 @@ RecordAction.prototype.findTodo=function(id) {
     return idx;
 }
 
+//
 RecordAction.prototype.setTodo=function() {
+    //저장(반영) 및 타입별 전처리(그리기)
     switch (this.type) {
         case 'add':
-            //이 부분 나중에 제일 큰 id를 찾는 방식(메서드)로 변경
             this.todoModel.title = this.param["title"];
-            this.todoModel.id=storage.lastId+1;
             storage.todoList.push(this.todoModel);
             storage.setProperty();
+            //console.dir(storage.todoList);
             break;
         case 'del':
+            //param(id,targetDOM)
             var idx=this.findTodo(this.param["id"]);
-            storage.todoList.slice(idx,1);
-            storage.setProperty();
+            storage.todoList.splice(idx,1);
+            //console.dir(storage.todoList);
             break;
         case 'edit':
             var idx=this.findTodo(this.param["id"]);
             storage.todoList[idx].title=this.param["title"];
+            //console.dir(storage.todoList);
+            break;
+        case 'sort':
+            // 현재 위치 > 해당 record > 삭제 후 삽입(이동)
+            var idx=this.findTodo(this.param["id"]);
+            //console.log(idx);
+
+            var todoRecord=storage.todoList[idx];
+            //console.log(todoRecord);
+            storage.todoList.splice(idx,1);
+            //console.dir(storage.todoList);
+
+            var newIdx=this.param["newIdx"];
+            //console.log("new "+newIdx);
+            storage.todoList.splice(newIdx,0,todoRecord);
+            //console.dir(storage.todoList);
             break;
     }
 }
+
+
 
 module.exports = router;
 

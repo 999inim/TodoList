@@ -40,7 +40,9 @@ function editTodoHandler(coreContext){
 
             //text필드 크기 조정
             var parentSize = $(this).parent('div').parent('div').width();
-            $(this).parent('div').siblings('div').children('.article-checkbox-edit').attr('size', parentSize * 0.13);
+            //console.log(parentSize);
+            //console.log(parentSize*0.04);
+            $(this).parent('div').siblings('div').children('.article-checkbox-edit').attr('size', parentSize * 0.08);
             //$(targetLabel).children('label').hide();
             $(targetLabel).siblings('.article-checkbox-edit').val(targetText);
             $(targetLabel).siblings('.article-checkbox-edit').show();
@@ -53,7 +55,7 @@ function editTodoHandler(coreContext){
             var newText = $(targetLabel).siblings('.article-checkbox-edit').val();
             $(targetLabel).siblings('.article-checkbox-edit').hide();
             $(targetLabel).text(newText);
-            console.log(newText);
+            //console.log(newText);
 
             Action.type="edit";
             Action.param={"id":targetID,"title":newText};
@@ -62,35 +64,30 @@ function editTodoHandler(coreContext){
     };
 }
 var sortIdx;
-function getSortIdx(){
+/*function getSortIdx(){
     return sortIdx;
-}
+}*/
 function sortTodoHandler(coreContext){
-    var oldIdx;
     $( "#sortable" ).sortable({
         placeholder: "ui-state-highlight",
         start: function( ui, event ) {
-            var targetRecord = event.item;
-            sortIdx=$(targetRecord).index();
+            //var targetRecord = event.item;
+            //sortIdx=$(targetRecord).index();
         },
         update:function(ui, event){
-            console.log("sort");
+            //console.log("sort");
             var targetRecord = event.item;
             var targetID=targetRecord.children().children().children('.article-checkbox').attr('id');
-            console.log("get "+ getSortIdx());
+            //console.log("get "+ getSortIdx());
             var newIdx=$(targetRecord).index();
-            console.log(newIdx);
-
+            //console.log("event "+newIdx);
             Action.type="sort";
-            Action.param={"id":targetID, "oldIdx":getSortIdx(), "newIdx":newIdx};
+            Action.param={"id":targetID, "newIdx":newIdx};
             coreContext.postTodo(Action);
         }
     });
     $( "#sortable" ).disableSelection();
-
-
 }
-
 
 function completeTodoHandler(coreContext){
     $(".article-checkbox").on("change",function(){
@@ -125,6 +122,25 @@ function addShortcutkeyHandler(coreContext){
     });
 }
 
+// ## menu
+
+function UpdateMenuObserver(){
+    this.num=5;
+}
+UpdateMenuObserver.prototype.update=function(type){
+        console.log(type);
+        var num=$('#menu-item-4').children('span').val();
+        console.log(num);
+    if(type=="add")
+        $('menu-item-4').children('span').val(num+1);
+    else if(type=="del")
+        $('menu-item-4').children('span').val(num-1)
+}
+var menuObserver= new UpdateMenuObserver();
 
 
-module.exports={addTodoHandler, delTodoHandler, editTodoHandler, sortTodoHandler};
+
+
+
+
+module.exports={addTodoHandler, delTodoHandler, editTodoHandler, sortTodoHandler, menuObserver};
