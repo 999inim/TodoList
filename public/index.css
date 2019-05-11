@@ -8,11 +8,11 @@ body{font-size:14px;}
 #nav-add{margin:5px 0 0 5px;font-size:14px; color:#fff; background-color:orangered; border-color:grey;}
 
 .content{}
-.menu{background-color:floralwhite;}
+.menu{background-color:floralwhite}
 .menu ul li{padding:2px 5px 2px 5px;}
 
 .section{background-color:green;}
-.article{background-color: ghostwhite; height:80%; overflow:scroll; overflow-x:hidden;}
+.article{background-color: ghostwhite; height:600px; overflow:scroll; overflow-x:hidden;}
 .article div{display:inline-flex;}
 .article-list{width:90%; margin-top:20px;}
 
