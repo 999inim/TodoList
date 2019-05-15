@@ -1,7 +1,17 @@
 module.exports={
-    drawTodo : function drawTodo(todo){
-        var articleRecord=makeTodo(todo);
-        $('.article-list').append(articleRecord);
+    drawTodo : function drawTodo(todo, pos){
+        var todoRecord = makeTodo(todo);
+        if(pos!=undefined){
+            if(pos==0){
+                console.log("prepend");
+                $('.article-list').prepend(todoRecord);
+            }else{
+                var targetTodo=$('.article-record:nth-child('+pos+')'); //해당 pos에 있는 todo
+                $(targetTodo).after(todoRecord);
+            }
+        }else {
+            $('.article-list').append(todoRecord);
+        }
     },
 
     drawTodoList:
@@ -22,7 +32,6 @@ module.exports={
     sortTodo : function sortTodo(from, to){
         //var targetTodo=$('.article-record:nth-child('+(from+1)+')');
             if (to === 0) {
-                console.log(from+' '+to);
                 $('.article-record:nth-child(' + (from + 1) + ')')
                     .remove()
                     .insertBefore($('.article-record:nth-child(' + (to + 1) + ')'));

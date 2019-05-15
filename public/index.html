@@ -23,14 +23,16 @@
 
   <div class="container nav-top ">
     <!-- ## nav -->
-    <div class="nav-input row d-flex justify-content-center  ">
-      <div class="col-6">
-        <div  class="form-inline center-block " >
-          <input  id="nav-input" name="title" class="nav-input form-control" style="width: 300px;" type="text" placeholder="여기에 입력하시오." aria-label="Search" >
-          <button id="nav-add" class="btn btn-success" type="submit">&nbsp;ADD&nbsp;</button>
+      <div class="nav-input row d-flex justify-content-center  ">
+        <div class="col-6">
+          <div  class="row nav-input-wrap form-inline center-block " >
+            <div class="col-1"><button id="nav-add" class="btn" type="submit"><i class="nav-add far fa-plus-square fa-lg"></i></button></div>
+            <div class="col"><input  id="nav-input" name="title" class="nav-input form-control" style="width: 350px;" type="text" placeholder="여기에 입력하시오." aria-label="Search" ></div>
+
+            <div class="col-1"><i class="nav-cancel fas fa-times"></i></div>
+          </div>
         </div>
       </div>
-    </div>
   </div>
 
   <div class="container content">
