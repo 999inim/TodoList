@@ -1,12 +1,13 @@
 module.exports={
     setEventHandler : function(doc,model,renderer) {
-            //var docListner=doc.on('change', function (op) {/*console.dir(op);*/console.log(op);});
+        //Action Handler
+        addTodoHandler(doc.at(), model,renderer);
+        delTodoHandler(doc.at(), renderer);
+        editTodoTextHandler(doc.at(), renderer);
+        sortTodoHandler(doc.at(), renderer);
 
-
-            addTodoHandler(doc.at(), model,renderer);
-            delTodoHandler(doc.at(), renderer);
-        /*editTodoHandler(doc, renderer);
-        sortTodoHandler(doc, renderer);*/
+        replacePropertyHandler(doc.at(), renderer);
+        //Common
     }
 }
 
@@ -15,20 +16,20 @@ var Action={"type":"","param":{}};
 function addTodoHandler(doc, model,renderer){
     console.log("addHandler");
 
+
     $("#nav-add").on("click", function () {
         var todoTitle=$("#nav-input").val();
-        //Action 타입과 인자 전달
-        console.log(todoTitle);
+        $("#nav-input").val('').focus(); //내용 지우기 및 포커스 이동
+        //console.log(todoTitle);
 
         var newRecord=model.getTodoRecord();
         newRecord["title"]=todoTitle;
-        console.dir(newRecord);
         doc.push(newRecord);
         console.log(doc.get());
         renderer.drawTodo(newRecord);
     });
 
-    doc.at().on('insert',function(pos,data){
+    doc.on('insert',function(pos,data){
         renderer.drawTodo(data);
     });
 }
@@ -39,149 +40,122 @@ function delTodoHandler(doc, renderer){
         var targetIdx=targetTodo.index();
         console.log("del");
         //article records
-        doc.del(1,targetIdx);
+        doc.del(targetIdx,1);
         console.log(targetIdx);
         console.log(doc.get());
 
         renderer.delTodo(targetIdx);
     });
 
-    doc.at().on('delete',function(pos,data){
+    doc.on('delete',function(pos,data){
         console.log(pos);
         renderer.delTodo(pos);
     });
 }
 
-function editTodoHandler(doc, renderer){
-    $(document).one("click",'.article-toolbox-edit',handler1);
-
-    function handler1() {
-        $(this).one("click", handler2);
-        var targetLabel = $(this).parent('div').siblings('div').children('label');
-        var targetText = $(targetLabel).text();
-        $(targetLabel).text('');
-
-        //text필드 크기 조정
-        var parentSize = $(this).parent('div').parent('div').width();
-        //console.log(parentSize);
-        //console.log(parentSize*0.04);
-        $(this).parent('div').siblings('div').children('.article-checkbox-edit').attr('size', parentSize * 0.08);
-        //$(targetLabel).children('label').hide();
-        $(targetLabel).siblings('.article-checkbox-edit').val(targetText);
-        $(targetLabel).siblings('.article-checkbox-edit').show();
-    }
-    function handler2() {
-        $(this).one("click", handler1);
-        var targetLabel = $(this).parent('div').siblings('div').children('label');
-        console.log("edit");
-        var targetID = $(this).parent('div').prev().children().first().attr('id');
-        var newText = $(targetLabel).siblings('.article-checkbox-edit').val();
-        $(targetLabel).siblings('.article-checkbox-edit').hide();
-        $(targetLabel).text(newText);
-        //console.log(newText);
-
-        Action.type="edit";
-        Action.param={"id":targetID,"title":newText};
-        //router.postTodo(Action, model, renderer);
-
-    };
-}
-
 function sortTodoHandler(doc, renderer){
-    doc.at().on('move',function(from,to){
-        console.log('move', from, to);
-    });
-    /*
+    var dragFrom=null;
+    var newPos=null;
     $( "#sortable" ).sortable({
-        placeholder: "ui-state-highlight",
-        start: function( ui, event ) {
-            //var targetRecord = event.item;
-            //sortIdx=$(targetRecord).index();
-        },
-        update:function(ui, event){
-            //console.log("sort");
-            var targetRecord = event.item;
-            var targetID=targetRecord.children().children().children('.article-checkbox').attr('id');
-            //console.log("get "+ getSortIdx());
-            var newIdx=$(targetRecord).index();
-            //console.log("event "+newIdx);
-            Action.type="sort";
-            Action.param={"id":targetID, "newIdx":newIdx};
-            router.postTodo(Action, model, renderer);
-        }
-    });
-    $( "#sortable" ).disableSelection();
-    */
-
-
-    // redefine
-
-    var dragFrom = null;
-
-    doc.at().on('move', function(from, to) {
-        //console.log('move', from, to);
-        if (dragFrom === from) {
-            dragFrom = to;
-        } else {
-            if (to === 0) {
-                $('#trains :nth-child(' + (from + 1) + ')')
-                    .remove()
-                    .insertBefore($('#trains :nth-child(' + (to + 1) + ')'));
-            } else {
-                $('#trains :nth-child(' + (from + 1) + ')')
-                    .remove()
-                    .insertAfter($('#trains :nth-child(' + to + ')'));
-            }
-        }
-    });
-
-    $("#sortable").sortable({
-        helper: 'clone',
-        start: function(event, ui) {
+        placeholder: "sortable-placeholder", //A class name that gets applied to the otherwise white space.
+        helper: 'clone', //Allows for a helper element to be used for dragging display
+        start: function( event, ui) { // when sorting starts.
+            console.log(1);
+            newPos = ui.placeholder.index();
             dragFrom = ui.item.index();
             ui.item.remove();
         },
-        update: function(event, ui) {
-            //console.log('update', ui.item.index());
-            dragFrom = null;
+        change:function(event, ui){ //triggered during sorting, but only when the DOM position has changed.
+            console.log(2);
+            newPos = ui.placeholder.index();
+            //dragFrom = newPos;
         },
-        change: function(event, ui) {
-            var newPos = ui.placeholder.index();
-            //console.log('sending move', dragFrom, newPos);
-            doc.at().move(dragFrom, newPos);
-            dragFrom = newPos;
+        beforeStop: function(event, ui) { //when sorting stops, but when the placeholder/helper is still available.
+            console.log(3);
+            ui.placeholder.before(ui.item); //placeholder 앞에 item을 놓는다.
         },
-        beforeStop: function(event, ui) {
-            //console.log(ui.item);
-            ui.placeholder.before(ui.item);
-        },
-        axis: 'y'
-    });
-
-
-
-}
-
-function completeTodoHandler(router){
-    $(".article-checkbox").on("change",function(){
-        console.log("change");
-        var todoDataTarget=$(this).parent('div').parent('div').parent('div'); //target : article-task element
-        var todoData=JSON.parse(todoDataTarget.children('.article-task-data').text());
-        if($(this).is(":checked")){
-            $(this).siblings("label").css("text-decoration-line","line-through");
-            todoData.completed=true;
-        }else{
-            $(this).siblings("label").css("text-decoration-line","none");
-            todoData.completed=false;
+        update:function(event, ui) { // when the user stopped sorting and the DOM position has changed
+            console.log(4);
+            console.log("sort");
+            doc.move(dragFrom, newPos);
+            dragFrom = null; //change이후 위치가 바뀌었으면서 멈춘상태.
         }
-        $(todoDataTarget).children('.article-task-data').text(JSON.stringify(todoData));
 
+    });
+    $( "#sortable" ).disableSelection();
 
-        //completedTodo();
+    doc.on('move',function(from,to){
+        //console.log(dragFrom+" "+from+" "+to);
+        if(dragFrom===from) {
+            console.log("same !");
+            dragFrom = to;
+        }else{
+            console.log("draw ot sort");
+            console.log(from+" "+to);
+            renderer.sortTodo(from,to);
+        }
+    });
+
+}
+
+function editTodoTextHandler(doc, renderer){
+    // 클릭시 토글(toolbox-edit)
+    $(document).on("click",'.article-toolbox-edit',function(){
+        var clicks = $(this).data('clicks');
+        var pos=$(this).parent('div').parent('div').parent('div.article-record').index();
+        if (!clicks) {
+            // odd clicks
+            console.log(1);
+            renderer.editText(pos,1);
+        } else {
+            // even clicks
+            console.log(2);
+            var newText = renderer.editText(pos, 2);
+            console.log(doc.get()+" "+pos);
+            var after = doc.get()[pos];
+            after.title=newText;
+            after.update="title";
+            doc.replace(pos,after);
+        }
+        $(this).data("clicks", !clicks);
+    });
+
+    doc.on('replace', function (pos, was, now) {
+        //was가 바뀐게 날아옴...(상관은없음)
+        if(now.update=="title"){
+            console.log("edit");
+            var after=now.title;
+            renderer.editText(pos,now.title);
+        }
     });
 }
 
-function addShortcutkeyHandler(router){
+function replacePropertyHandler(doc, renderer){
+
+    $(document).on("change","input.article-checkbox",function(){
+        console.log("change");
+        var pos=$(this).parent('div').parent('div').parent('div.article-record').index();
+
+        var completed=renderer.replaceProperty(pos, "completed");//그리기
+        console.log(doc.get()+" "+pos);
+        var after=doc.get()[pos];
+        after["update"]="completed";
+        after.completed=(completed=="true")?true:false;
+
+        doc.replace(pos,after);
+    });
+
+    doc.on('replace', function (pos, was, now) {
+        //was,now 체크
+        if(now.update=="completed") {
+            console.log('completed');
+            console.log(now);
+            renderer.replaceProperty(pos, now.completed);
+        }
+    });
+}
+
+function shortcutkeyHandler(router){
     $(".article-checkbox-edit").keypress(function(e) {
         if (e.keyCode == 13){
             var articleCheckbox=$(this).parent('div');
@@ -195,5 +169,8 @@ function addShortcutkeyHandler(router){
     });
 }
 
+function navHandler(){
+
+}
 
 

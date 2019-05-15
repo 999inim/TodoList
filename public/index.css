@@ -23,19 +23,20 @@ body{font-size:14px;}
 .article-content{padding:10px 20px 10px 20px; font-size:15px;}
 
 .article-checkbox-label{width:100%; word-break:break-all;}
+.article-checkbox-label:hover{cursor:pointer}
 .article-checkbox-edit{width:auto; background-color:white; border-style:none;}
 .article-checkbox-edit:hover{background-color:whitesmoke}
 
 .article-toolbox{padding-top:7px;}
 .article-toolbox:hover{cursor:default;}
 .article-toolbox-edit{color:lightgrey}
-.article-toolbox-edit:hover{color:dodgerblue}
+.article-toolbox-edit:hover{color:dodgerblue; cursor:pointer}
 .article-toolbox-del{color:lightgrey}
-.article-toolbox-del:hover{color:red}
+.article-toolbox-del:hover{color:red; cursor:pointer}
 
 
 .aside{background-color:mediumspringgreen;height:80%;display:none;}
 
 .footer{background-color:beige; padding:10px; text-align: center;}
 
-.ui-state-highlight {width:90%;margin-left:50px; height:50px; border-width:0px; border-style:none; background-color:transparent; }
+.sortable-placeholder {width:90%;margin-left:50px; height:50px; border-width:0px; border-style:none; background-color:transparent; }
