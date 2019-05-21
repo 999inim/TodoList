@@ -1,0 +1,18 @@
+{
+  "name": "todolist",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./app.js",
+    "auto-restart": "nodemon ./app.js",
+    "build": "browserify ./public/Main.js -o ./public/bundle.js",
+    "auto-build": "watchify ./public/Main.js -o ./public/bundle.js -v"
+  },
+  "dependencies": {
+    "express": "~4.16.0",
+    "browserchannel": "*",
+    "body-parser": "^1.18.3",
+    "minifyify": "^7.3.5",
+    "share": "^0.6.3"
+  }
+}

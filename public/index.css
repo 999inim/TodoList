@@ -1,0 +1,56 @@
+
+body{font-size:14px;}
+
+.header{height:40px; background-color:white; }
+.nav-top{height:80px; background-color:white; border-bottom:1px solid black;}
+.nav-input-wrap{background-color:aliceblue;border-radius:10px 10px 10px 10px;box-shadow:-2px -2px 2px lightgray inset;}
+.nav-input-wrap:hover{background-color:white; border:#adb5bd solid 1px;box-shadow:2px 2px 2px lightgrey;}
+.nav-input input{font-size:30px;font-weight:bold; background-color:transparent;margin:7px 0 5px 5px; border:none;border-radius:16px 16px 16px 16px}
+.nav-input input::placeholder{font-size:15px;color:lightgrey}
+.nav-input input:hover{background-color:transparent;}
+.form-control:focus {border-color: whitesmoke;box-shadow: 0 0 0 0 lightgrey;}
+.nav-input input[type="text"] {font-size:14px;}
+#nav-add{margin:5px 0 0 5px;font-size:14px; color:black; background-color:transparent; border:none;}
+#nav-add:hover{color:black;}
+i.nav-add{cursor:pointer;color:lightgrey; }
+i.nav-add:hover{color:blue;}
+i.nav-cancel:hover{cursor:pointer}
+
+.content{}
+.menu{background-color:ghostwhite}
+.menu ul li{padding:2px 5px 2px 5px;}
+
+.section{background-color:green;}
+.article{background: linear-gradient( to right, ghostwhite 1%,whitesmoke 8%, white) ; height:600px; overflow:scroll; overflow-x:hidden;}
+.article div{display:inline-flex;}
+.article-list{width:90%; margin-top:20px;}
+
+.article-record{margin-bottom: 4px; padding:2px 2px 2px 2px; border-style:none;background-color:transparent;}
+.article-handle{margin: 0px 10px 0px 10px;}
+.article-handle:hover{cursor:grab}
+.article-handle:active{cursor:grabbing}
+.article-content{padding:7px 20px 7px 20px; font-size:15px;box-shadow:3px 3px 3px darkgrey;border-radius:3px 3px 3px 3px}
+
+.article-checkbox-label{width:100%; word-break:break-all;}
+.article-checkbox-label:hover{cursor:pointer}
+.custom-control-label::before{ border:#adb5bd solid 1px !important;}
+.article-checkbox-edit{width:auto; background-color:white; border-style:none;}
+.article-checkbox-edit:hover{background-color:whitesmoke}
+
+.article-toolbox{padding-top:7px;}
+.article-toolbox:hover{cursor:default;}
+.article-toolbox-edit{color:lightgrey}
+.article-toolbox-edit:hover{color:dodgerblue; cursor:pointer}
+.article-toolbox-del{color:lightgrey}
+.article-toolbox-del:hover{color:red; cursor:pointer}
+
+
+::-webkit-scrollbar {background-color:whitesmoke;}
+::-webkit-scrollbar-thumb {height:40px;background-color: lightgray;  border-radius: 8px; opacity:0.9;}
+::-webkit-scrollbar-button {width: 20px;height: 30px;background-color: whitesmoke;}
+
+.aside{background-color:mediumspringgreen;height:80%;display:none;}
+
+.footer{background-color:white; padding:10px; text-align: center; border-top:1px solid black;}
+
+.sortable-placeholder {width:90%;margin-left:50px; height:50px; border-width:0px; border-style:none; background-color:transparent; }

@@ -1,0 +1,98 @@
+<html>
+<head>
+  <title>TodoList</title>
+
+    <script src="http://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="/bundle.js"></script>
+
+    <script src="/browserchannel/dist/bcsocket.js"></script>
+    <script src="/share/webclient/share.uncompressed.js"></script>
+    <script src="/share/webclient/json.uncompressed.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/index.css">
+</head>
+
+<body>
+
+  <div class="container header">
+  </div>
+
+  <div class="container nav-top ">
+    <!-- ## nav -->
+      <div class="nav-input row d-flex justify-content-center  ">
+        <div class="col-6">
+          <div  class="row nav-input-wrap form-inline center-block " >
+            <div class="col-1"><button id="nav-add" class="btn" type="submit"><i class="nav-add far fa-plus-square fa-lg"></i></button></div>
+            <div class="col"><input  id="nav-input" name="title" class="nav-input form-control" style="width: 350px;" type="text" placeholder="여기에 입력하시오." aria-label="Search" ></div>
+
+            <div class="col-1"><i class="nav-cancel fas fa-times"></i></div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="container content">
+    <div class="row">
+      <div class="col-2 menu">
+        <!--## menu -->
+
+        <hr>
+
+        <ul class="menu-list-main list-group">
+          <li class="menu-item list-group-item d-flex justify-content-between align-items-center">오늘 할일</li>
+          <li class="menu-item list-group-item d-flex justify-content-between align-items-center">중요 할일</li>
+          <li class="menu-item list-group-item d-flex justify-content-between align-items-center">예정된 할일</li>
+          <li class="menu-item list-group-item d-flex justify-content-between align-items-center" id="menu-item-4">전체 할일
+            <span class="badge badge-primary badge-pill">5</span>
+          </li>
+        </ul>
+
+        <hr>
+
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center">쇼핑
+            <span class="badge badge-primary badge-pill">30</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">회사</li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">새 목록</li>
+        </ul>
+
+        <hr>
+
+        <form><input type="button" value="새로 고침" onClick="window.location.reload()"></form>
+
+      </div>
+
+      <div class="col-10 section">
+          <!--## section -->
+          <div class="row">
+            <div class="col article">
+              <!-- ### Todo List -->
+
+              <div class="article-list list-group center-block " id="sortable">
+                <!-- Todo Record -->
+              </div>
+
+            </div>
+
+            <!-- ### Todo Record Detail-->
+            <div class="col aside"></div>
+            </div>
+          </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="container footer">
+    All Right Reserved by ChangMin-Lee
+  </div>
+
+
+</body>
+
+</html>
