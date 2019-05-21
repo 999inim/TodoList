@@ -1,5 +1,4 @@
 // ## Load Dependency Module Func
-var router=require('./js/Router');
 var model = require('./js/Model');
 var eventHandler=require('./js/EventHandler');
 var renderer=require('./js/Renderer');
@@ -14,20 +13,15 @@ $(function(){
     sharejs.open('todo', 'json', function (error, doc) {
         if (error) {if (console) {console.error(error);}return;}
         if (doc.created && (doc.at().get() == null)) {
-            //doc을 새로생성하고, doc에 데이터가 없을때
-            doc.set([]);
+            doc.set([]);//doc이없는 경우 초기세팅.
         }else if(!doc.created && (doc.at().get()!=null)){
             renderer.drawTodoList(doc.at().get());
-        }else{
-            console.log("3");
         }
 
         console.dir(doc);
         console.dir(doc.at());
         eventHandler.setEventHandler(doc,new model.Model(),renderer);
     });
-    //m.setTodoList([]);
-    //console.log(m.getTodoList());
 });
 
 

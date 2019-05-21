@@ -13,7 +13,6 @@ module.exports={
             $('.article-list').append(todoRecord);
         }
     },
-
     drawTodoList:
         function drawTodoList(todoList/*처음 디비에서 가져온 리스트들*/){
             $.each(todoList, function(index){
@@ -29,12 +28,13 @@ module.exports={
         });
     },
 
-    sortTodo : function sortTodo(from, to){
-        //var targetTodo=$('.article-record:nth-child('+(from+1)+')');
+    moveTodo : function moveTodo(from, to){
+        //from은 index값, to는 position값
+
             if (to === 0) {
                 $('.article-record:nth-child(' + (from + 1) + ')')
                     .remove()
-                    .insertBefore($('.article-record:nth-child(' + (to + 1) + ')'));
+                    .insertBefore($('.article-record:nth-child(' + (to+1) + ')'));
             } else {
                 $('.article-record:nth-child(' + (from + 1) + ')')
                     .remove()

@@ -4,7 +4,7 @@ module.exports={
         addTodoHandler(doc.at(), model,renderer);
         delTodoHandler(doc.at(), renderer);
         editTodoTextHandler(doc.at(), renderer);
-        sortTodoHandler(doc.at(), renderer);
+        moveTodoHandler(doc.at(), renderer);
 
         replacePropertyHandler(doc.at(), renderer);
         //Common
@@ -80,78 +80,75 @@ function delTodoHandler(doc, renderer){
     });
 }
 
-function sortTodoHandler(doc, renderer){
-    var dragFrom=null;
+function moveTodoHandler(doc, renderer){
     var newPos=null;
-    var change="";
+    var dragFrom=null;
+
+    var pick=false; //요소가 들려있는지 여부
+    var state=null;
+    var cancel=false;
+
     $( "#sortable" ).sortable({
         placeholder: "sortable-placeholder", //A class name that gets applied to the otherwise white space.
         helper: 'clone', //Allows for a helper element to be used for dragging display
         start: function( event, ui) { // when sorting starts.
-            console.log(1);
-            newPos = ui.placeholder.index();
+            console.log("1.move start state");
+            pick=true;
+            state="start";
+
             dragFrom = ui.item.index();
             ui.item.remove();
+            newPos = ui.placeholder.index();
+            console.log(dragFrom, newPos);
         },
         change:function(event, ui){ //triggered during sorting, but only when the DOM position has changed.
-            console.log(2);
+            state="change";
+            console.log("2.move change state");
             newPos = ui.placeholder.index();
-            //dragFrom = newPos;
+            console.log(dragFrom, newPos);
         },
         beforeStop: function(event, ui) { //when sorting stops, but when the placeholder/helper is still available.
-            console.log(3);
-            console.log(change);
-            console.log(newPos);
-            if (change=="down"){
-                console.log("change redraw"); //hide한거 지우고 새로운 위치에 그려야함.
-                $('.article-record:nth-child('+newPos+')').after(ui.item);
-                change="";
-            }else if(change=="up"){
-                console.log("change redraw"); //hide한거 지우고 새로운 위치에 그려야함.
-                $('.article-record:nth-child('+newPos+')').before(ui.item);
-                change="";
-            }else{
-              ui.placeholder.before(ui.item); //placeholder 앞에 item을 놓는다.
+            pick=false;
+            console.log("3.move beforeStop state");
+            if(!cancel){
+            state="beforeStop";
+                ui.placeholder.before(ui.item);
             }
         },
         update:function(event, ui) { // when the user stopped sorting and the DOM position has changed
-            console.log(4);
-
-            console.log("local sort");
-            console.log("from: " + dragFrom + " to: " + newPos);
-            console.log("--------------");
-
-            console.log("not change move");
-            doc.move(dragFrom, newPos);
-
-            dragFrom = null; //change이후 위치가 바뀌었으면서 멈춘상태.
+            pick=false;
+            if(!cancel){
+                state="update";
+                console.log("4.move update state");
+                console.log(dragFrom, newPos);
+                if(dragFrom!=newPos)
+                    doc.move(dragFrom, newPos);
+                dragFrom = null; //change이후 위치가 바뀌었으면서 멈춘상태.
+            }else{
+                cancel=false;
+                console.log("same");
+            }
         }
 
     });
     $( "#sortable" ).disableSelection();
 
     doc.on('move',function(from,to){
-        console.log("remote sort");
-        console.log("dragFrom: "+dragFrom);
-        console.log("newPos: "+newPos);
-        console.log("from: "+from+" to: "+to);
-        console.log("--------------");
-        if(newPos!=null){
-            if(newPos-1<=to&&newPos-1<from){
-                console.log(1111);
-                //move전에 pos보다 큰 위치에서 작은 위치로 move가 일어난 경우
-                change="down";
-                console.log(newPos);
-                newPos=newPos+1;
-            }else if(newPos-1>=to&&newPos-1>from){
-                console.log(2222);
-                //move전에 pos보다 작은 위치에서 큰 위치로 move가 일어난 경우
-                change="up";
-                newPos=newPos-1;
+        console.log(5);
+        console.log(from+" "+to);
+        //console.log(JSON.stringify(doc.get()));
+        if(pick){
+            if(state=="start"||state=="change"||dragFrom==from) {
+                //setTimeout(function(){//비동기
+                        console.log("cancel");
+                        cancel=true;
+                        $('#sortable').sortable('cancel');
+                        pick = false;
+                        renderer.moveTodo(from,to);
+                //},50);
             }
         }else{
-            console.log(33333);
-            renderer.sortTodo(from,to);
+        renderer.moveTodo(from,to);
         }
     });
 

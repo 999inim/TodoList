@@ -29,7 +29,7 @@ i.nav-cancel:hover{cursor:pointer}
 .article-handle{margin: 0px 10px 0px 10px;}
 .article-handle:hover{cursor:grab}
 .article-handle:active{cursor:grabbing}
-.article-content{padding:7px 20px 7px 20px; font-size:15px;box-shadow:3px 3px 3px darkgrey;}
+.article-content{padding:7px 20px 7px 20px; font-size:15px;box-shadow:3px 3px 3px darkgrey;border-radius:3px 3px 3px 3px}
 
 .article-checkbox-label{width:100%; word-break:break-all;}
 .article-checkbox-label:hover{cursor:pointer}
