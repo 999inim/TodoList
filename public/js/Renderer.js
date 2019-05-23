@@ -45,7 +45,7 @@ module.exports={
     editText : function editText(pos, type){
         if(type==1){
             var target=$('.article-record:nth-child(' + (pos + 1) + ')');
-            console.dir(target);
+            console.dir(target); 
 
             var label=$(target).find('label.article-checkbox-label');
             var before = $(label).text();
@@ -54,7 +54,7 @@ module.exports={
             var input=$(target).find('input.article-checkbox-edit');
             $(input).attr('size', $(target).width() * 0.08);
             $(input).val(before);
-            $(input).show();
+            $(input).show().focus().select();
             return -1;
         }else if(type==2){
             var target=$('.article-record:nth-child(' + (pos + 1) + ')');
