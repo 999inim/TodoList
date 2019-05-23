@@ -5,9 +5,9 @@ module.exports={
         delTodoHandler(doc.at(), renderer);
         editTodoTextHandler(doc.at(), renderer);
         moveTodoHandler(doc.at(), renderer);
-
         replacePropertyHandler(doc.at(), renderer);
-        //Common
+
+        menuHandler("",0);
     }
 }
 
@@ -37,6 +37,7 @@ function addTodoHandler(doc, model,renderer){
         var newRecord=model.getTodoRecord();
         newRecord["title"]=todoTitle;
         doc.push(newRecord);
+        menuHandler("total",1);
 
         console.log("local add: ");
         console.log(newRecord);
@@ -52,6 +53,7 @@ function addTodoHandler(doc, model,renderer){
         console.log("--------------");
 
         renderer.drawTodo(data,pos);//pos에 그려야함
+        menuHandler("total",1);
     });
 
 
@@ -68,6 +70,7 @@ function delTodoHandler(doc, renderer){
         console.log(doc.get());
         console.log("--------------");
         renderer.delTodo(pos);
+        menuHandler("total",-1);
     });
 
     doc.on('delete',function(pos,data){
@@ -77,6 +80,7 @@ function delTodoHandler(doc, renderer){
         console.log(doc.get());
         console.log("--------------");
         renderer.delTodo(pos);
+        menuHandler("total",-1);
     });
 }
 
@@ -156,9 +160,21 @@ function moveTodoHandler(doc, renderer){
 
 function editTodoTextHandler(doc, renderer){
     // 클릭시 토글(toolbox-edit)
+    var clicks, pos;
+    $(document).on('keypress','.article-checkbox-edit',function (e) {
+        if (e.which == 13) {
+            clicks=$(this).parent('div').next('div').children('.article-toolbox-edit').data('clicks');
+            pos=$(this).parent('div').parent('div').parent('div.article-record').index();
+            evenClick();
+            console.log("1111");
+            $(this).parent('div').next('div').children('.article-toolbox-edit').data("clicks", !clicks);
+        }
+    });
+
     $(document).on("click",'.article-toolbox-edit',function(){
-        var clicks = $(this).data('clicks');
-        var pos=$(this).parent('div').parent('div').parent('div.article-record').index();
+        clicks=$(this).data('clicks');
+        pos=$(this).parent('div').parent('div').parent('div.article-record').index();
+
         if (!clicks) {
             // odd clicks
             console.log(1);
@@ -166,15 +182,20 @@ function editTodoTextHandler(doc, renderer){
         } else {
             // even clicks
             console.log(2);
-            var newText = renderer.editText(pos, 2);
-            console.log(doc.get()+" "+pos);
-            var after = doc.get()[pos];
-            after.title=newText;
-            after.update="title";
-            doc.replace(pos,after);
+            evenClick();
         }
         $(this).data("clicks", !clicks);
     });
+
+    function evenClick(){
+        console.log(2);
+        var newText = renderer.editText(pos, 2);
+        console.log(doc.get()+" "+pos);
+        var after = doc.get()[pos];
+        after.title=newText;
+        after.update="title";
+        doc.replace(pos,after);
+    }
 
     doc.on('replace', function (pos, was, now) {
         //was가 바뀐게 날아옴...(상관은없음)
@@ -193,40 +214,38 @@ function replacePropertyHandler(doc, renderer){
         var pos=$(this).parent('div').parent('div').parent('div.article-record').index();
 
         var completed=renderer.replaceProperty(pos, "completed");//그리기
-        console.log(doc.get()+" "+pos);
+        menuHandler("completed",(completed=="true")?1:-1);
         var after=doc.get()[pos];
-        after["update"]="completed";
-        after.completed=(completed=="true")?true:false;
-
+        console.dir(doc.get());
+        console.log(after);
+        after["completed"]=(completed=="true")?true:false;
+        //after["update"]="completed";
+        //after.completed=(completed=="true")?true:false;
         doc.replace(pos,after);
     });
 
     doc.on('replace', function (pos, was, now) {
         //was,now 체크
-        if(now.update=="completed") {
-            console.log('completed');
-            console.log(now);
-            renderer.replaceProperty(pos, now.completed);
-        }
+        var check=now.completed;
+        menuHandler("completed",(check==true)?1:-1);
+        console.log("------------");
+        renderer.replaceProperty(pos, now.completed);
     });
 }
 
-function shortcutkeyHandler(router){
-    $(".article-checkbox-edit").keypress(function(e) {
-        if (e.keyCode == 13){
-            var articleCheckbox=$(this).parent('div');
-            var newText=$(articleCheckbox).children('.article-checkbox-edit').val();
-            //console.log(newText);
-            $(articleCheckbox).children('label').text(newText);
-            $(articleCheckbox).children('label').show();
-            $(articleCheckbox).children('.article-checkbox-edit').hide();
-        }
-        editTodoHandler();
-    });
-}
+function menuHandler(type, value){
+    var menu1=$('#menu-item-1 span');
+    //var menu2=$('#menu-item-2 span');
 
-function navHandler(){
+    var totalNum=parseInt(menu1.text());
+    //var completedNum=parseInt(menu2.text());
+    if(type=="total"){
+        totalNum=totalNum+value;
+            menu1.text(totalNum);
+    }/*else{
+        completedNum=completedNum+value;
+        menu2.text(completedNum);
+    }*/
 
 }
-
 
