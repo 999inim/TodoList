@@ -1,15 +1,18 @@
 # TodoList
-Make Simple Cooperative TodoList App with NodeJS, Browersify. 
+Make Simple Cooperative TodoList App with NodeJS, ShareJS, Browersify. 
 
 ## 개발환경
 1. 서버
 NodeJS
 
-2. BuildTools
+2. Operational Transformation(OT) Engine
+[ShareJS](https://github.com/josephg/ShareJS)
+
+3. BuildTools
 + Nodemon
 + Watchify
 
-3. 개발툴
+4. 개발툴
 + InteliiJ IDEA
 (anything is ok.)
 
