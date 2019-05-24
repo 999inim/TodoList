@@ -5,7 +5,7 @@ Make Simple Cooperative TodoList App with NodeJS, ShareJS, Browersify.
 1. 서버
 NodeJS
 
-2. Operational Transformation(OT) Engine
+2. Operational Transformation(OT) Engine  
 [ShareJS](https://github.com/josephg/ShareJS)
 
 3. BuildTools
